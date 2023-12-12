@@ -47,22 +47,22 @@ jobs:
     - name: Publish .NET Core Project
       run: dotnet publish -c Release -o release --nologo
 
-    # - name: Commit wwwroot to GitHub Pages
-    #   uses: JamesIves/github-pages-deploy-action@3.7.1
-    #   with:
-    #     GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
-    #     BRANCH: gh-pages
-    #     FOLDER: release/wwwroot
-
     - name: Commit wwwroot to GitHub Pages
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
-        commit_message: Update GitHub Pages
-        branch: gh-pages
-        create_branch: true
-        commit_user_name: GitHub Actions
-        commit_user_email: github-actions@github.com
-        commit_author: GitHub Actions <github-actions@github.com>
+        GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: release/wwwroot
 
-    - name: Push changes
-      run: git push
+    # - name: Commit wwwroot to GitHub Pages
+    #   uses: stefanzweifel/git-auto-commit-action@v4
+    #   with:
+    #     commit_message: Update GitHub Pages
+    #     branch: gh-pages
+    #     create_branch: true
+    #     commit_user_name: GitHub Actions
+    #     commit_user_email: github-actions@github.com
+    #     commit_author: GitHub Actions <github-actions@github.com>
+
+    # - name: Push changes
+    #   run: git push
