@@ -62,3 +62,6 @@ jobs:
         commit_user_name: GitHub Actions
         commit_user_email: github-actions@github.com
         commit_author: GitHub Actions <github-actions@github.com>
+        
+    - name: Push changes
+      run: git push origin gh-pages
