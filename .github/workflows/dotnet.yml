@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: .NET and GitHub Pages
 
 on:
   push:
@@ -51,8 +51,8 @@ jobs:
     - name: Publish .NET Core Project
       run: dotnet publish ${{ env.PROJECT_NAME }} -c Release -o release --nologo
 
-    - name: Change base-tag in index.html from / to ${{ env.PROJECT_NAME }}
-      run: sed -i 's/<base href="\/" \/>/<base href="\/${{ env.PROJECT_NAME }}\/" \/>/g' release/wwwroot/index.html
+    - name: Change base-tag in index.html from / to ${{ env.REPOSITORY_NAME }}
+      run: sed -i 's/<base href="\/" \/>/<base href="\/${{ env.REPOSITORY_NAME }}\/" \/>/g' release/wwwroot/index.html
   
     - name: copy index.html to 404.html
       run: cp release/wwwroot/index.html release/wwwroot/404.html
