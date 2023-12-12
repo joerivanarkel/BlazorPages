@@ -5,9 +5,9 @@ name: .NET and GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 env:
   REPOSITORY_NAME: BlazorPages
@@ -59,6 +59,13 @@ jobs:
 
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
+
+    - name: Move wwwroot content if not main branch
+      run: |
+        if [[ "${{ github.ref_name }}" != "main" ]]; then
+          mkdir -p release/wwwroot/${{ github.ref_name }}
+          mv release/wwwroot/* release/wwwroot/${{ github.ref_name }}/
+        fi
 
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
