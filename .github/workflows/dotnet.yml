@@ -61,11 +61,16 @@ jobs:
       run: touch release/wwwroot/.nojekyll
 
     - name: Move wwwroot content if not main branch
+      # run: |
+      #   if [[ "${{ github.ref_name }}" != "main" ]]; then
+      #     mkdir -p release/wwwroot/${{ github.ref_name }}
+      #     mv release/wwwroot/* release/wwwroot/${{ github.ref_name }}/
+      #   fi
       run: |
-        if [[ "${{ github.ref_name }}" != "main" ]]; then
-          mkdir -p release/wwwroot/${{ github.ref_name }}
-          mv release/wwwroot/* release/wwwroot/${{ github.ref_name }}/
-        fi
+        dir="release/wwwroot/"
+        subdir="${{ github.ref_name }}"
+        mkdir -p "$dir/$subdir"
+        find "$dir" -maxdepth 1 -mindepth 1 -not -name "$subdir" -exec mv {} "$dir/$subdir" \;
 
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
